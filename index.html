@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Red Light Green Light - iPhone Ultra Fix</title>
+    <title>Red Light Green Light - Final HD Master</title>
     <style>
         :root {
             --bg: #0b0f19; --card: #161e2d; --accent: #38bdf8;
@@ -20,15 +20,14 @@
             overflow: hidden; -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- SETTINGS PORTAL --- */
+        /* --- SETTINGS --- */
         .setup-container { 
             padding: 2.5rem; border-radius: 2.5rem; width: 95%; max-width: 550px; 
             background: var(--card); box-shadow: 0 30px 60px rgba(0,0,0,0.9);
             z-index: 100; text-align: center; max-height: 92vh; overflow-y: auto;
-            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05);
+            backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.05);
             scrollbar-width: none; box-sizing: border-box;
         }
-        .setup-container::-webkit-scrollbar { display: none; }
 
         h2 { margin: 0 0 1.5rem 0; color: var(--accent); font-size: 2rem; font-weight: 800; }
 
@@ -47,16 +46,13 @@
         input, select { 
             background: var(--input-bg); border: 2px solid #334155; padding: 0.9rem; 
             border-radius: 1rem; color: white; font-size: 1rem; outline: none; transition: all 0.2s;
-            width: 100%; box-sizing: border-box;
         }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
 
         .checkbox-group { 
             display: flex; flex-wrap: wrap; justify-content: space-around; background: var(--input-bg); 
             padding: 0.9rem; border-radius: 1rem; border: 2px solid #334155; gap: 10px;
         }
         .checkbox-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
-        .checkbox-item input { width: 1.2rem; height: 1.2rem; cursor: pointer; appearance: checkbox; -webkit-appearance: checkbox; }
 
         .start-btn { 
             width: 100%; background: var(--accent); color: var(--bg); border: none; 
@@ -78,10 +74,8 @@
             justify-content: center; align-items: center; cursor: pointer; z-index: 200; backdrop-filter: blur(15px);
         }
 
-        .top-display { z-index: 50; text-align: center; margin-top: 0; text-shadow: 0 2px 20px rgba(0,0,0,0.8); pointer-events: none; }
-        
-        /* Schriftgröße angepasst auf deine letzte Änderung */
-        .status-text { font-size: clamp(4.5rem, 22vw, 8.5rem); font-weight: 900; text-transform: uppercase; letter-spacing: -5px; margin: 0; line-height: 0.8; }
+        .top-display { z-index: 50; text-align: center; margin-top: 0; text-shadow: 0 2px 25px rgba(0,0,0,1); pointer-events: none; }
+        .status-text { font-size: clamp(4rem, 20vw, 8rem); font-weight: 900; text-transform: uppercase; letter-spacing: -4px; margin: 0; line-height: 0.8; }
 
         .media-background { 
             position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; 
@@ -91,21 +85,20 @@
         #reddit-image, #reddit-video { width: 100%; height: 100%; object-fit: contain; }
 
         .bottom-bar { width: 90%; max-width: 650px; z-index: 50; margin-bottom: 0.5rem; }
-        .progress-container { width: 100%; height: 12px; background: rgba(255,255,255,0.3); border-radius: 20px; position: relative; overflow: visible; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .progress-container { width: 100%; height: 10px; background: rgba(255,255,255,0.3); border-radius: 20px; position: relative; overflow: visible; }
         #progress-bar { width: 0%; height: 100%; background: var(--white); border-radius: 20px; transition: width 0.1s linear; }
-        #phase-marker { position: absolute; left: 70%; top: -6px; bottom: -6px; width: 3px; background: white; box-shadow: 0 0 15px white; z-index: 60; border-radius: 4px; }
+        #phase-marker { position: absolute; left: 70%; top: -6px; bottom: -6px; width: 2px; background: white; box-shadow: 0 0 15px white; z-index: 60; border-radius: 4px; }
 
         body.green-active { background-color: var(--green); }
         body.red-active { background-color: var(--red); }
         .pulse { animation: pulse-anim 0.4s infinite alternate; }
-        @keyframes pulse-anim { from { transform: scale(1); } to { transform: scale(1.1); } }
+        @keyframes pulse-anim { from { transform: scale(1); } to { transform: scale(1.08); } }
     </style>
 </head>
 <body class="setup-mode">
 
     <div class="setup-container" id="setup-ui">
         <h2>Einstellungen</h2>
-        
         <div class="section-title">Inhalte & Filter</div>
         <div class="settings-grid">
             <div class="input-group full-width">
@@ -123,10 +116,10 @@
             <div class="input-group">
                 <label>Sortierung</label>
                 <select id="t-sort">
-                    <option value="random">Zufall (Fair Mix)</option>
+                    <option value="random">Zufall (Mix)</option>
                     <option value="hot">Beliebt</option>
                     <option value="new">Neu</option>
-                    <option value="top">Top (All Time)</option>
+                    <option value="top">Top</option>
                 </select>
             </div>
             <div class="input-group">
@@ -154,29 +147,26 @@
                 </select>
             </div>
         </div>
-
-        <button class="start-btn" onclick="bootGame()">SPIEL STARTEN</button>
+        <button class="start-btn" id="start-btn-el" onclick="bootGame()">SPIEL STARTEN</button>
     </div>
 
     <div id="game-ui">
-        <button class="btn-close" onclick="location.reload()">
+        <button class="btn-close" onclick="resetGame()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
         <div class="media-background">
             <img id="reddit-image" src="" alt="" style="display:none;">
-            <video id="reddit-video" autoplay muted loop playsinline style="display:none;"></video>
+            <video id="reddit-video" autoplay muted loop playsinline webkit-playsinline style="display:none;"></video>
         </div>
         <div class="top-display"><h1 id="status-label" class="status-text"></h1></div>
         <div class="bottom-bar"><div class="progress-container"><div id="phase-marker"></div><div id="progress-bar"></div></div></div>
     </div>
 
     <script>
-        let cfg = {}; let isLive = false; let startT; let clock; let countdownInt; let mediaInt; let animFrame;
+        let cfg = {}; let isLive = false; let startT, clock, countdownInt, mediaInt, animFrame;
         let redditPosts = []; let postIndex = 0;
 
         function getHDUrl(post) {
-            // raw_json=1 sorgt dafür, dass &amp; bereits als & geliefert wird, 
-            // wir behalten den Fix aber zur Sicherheit bei.
             if (post.preview?.images?.[0]?.source?.url) {
                 return post.preview.images[0].source.url.replace(/&amp;/g, '&');
             }
@@ -184,6 +174,7 @@
         }
 
         async function fetchSources() {
+            const btn = document.getElementById('start-btn-el');
             const sourceStr = document.getElementById('t-sources').value || "memes";
             const sort = document.getElementById('t-sort').value;
             const sourceList = sourceStr.split(',').map(s => s.trim()).filter(s => s !== "");
@@ -191,37 +182,32 @@
             const fImg = document.getElementById('f-img').checked;
             const fVid = document.getElementById('f-vid').checked;
             const fGif = document.getElementById('f-gif').checked;
-
             const fetchSort = sort === 'random' ? 'hot' : sort;
-            
-            const buckets = await Promise.all(sourceList.map(async (source) => {
-                // iPhone Fix: raw_json=1 und Cache-Buster hinzufügen
-                let url = source.toLowerCase().startsWith('u/') 
-                    ? `https://www.reddit.com/user/${source.substring(2)}/submitted.json?sort=${fetchSort}&limit=50&raw_json=1`
-                    : `https://www.reddit.com/r/${source}/${fetchSort}.json?limit=50&raw_json=1`;
+
+            // iPhone-sichere Parallel-Abfrage
+            const fetchPromises = sourceList.map(async (source) => {
+                let redditUrl = source.toLowerCase().startsWith('u/') 
+                    ? `https://www.reddit.com/user/${source.substring(2)}/submitted.json?sort=${fetchSort}&limit=40`
+                    : `https://www.reddit.com/r/${source}/${fetchSort}.json?limit=40`;
                 
-                try { 
-                    // mode: 'cors' für Safari explizit
-                    const r = await fetch(url, { mode: 'cors' }); 
-                    const j = await r.json(); 
-                    if (!j.data || !j.data.children) return [];
-
-                    return j.data.children.map(c => c.data).filter(p => {
-                        const isG = p.url.endsWith('.gif') || p.preview?.reddit_video_preview;
+                try {
+                    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(redditUrl + '&raw_json=1')}`;
+                    const r = await fetch(proxyUrl);
+                    const j = await r.json();
+                    const data = JSON.parse(j.contents);
+                    
+                    return data.data.children.map(c => c.data).filter(p => {
+                        const isG = p.url?.endsWith('.gif') || p.preview?.reddit_video_preview;
                         const isV = p.is_video;
-                        const isI = p.post_hint === 'image' || p.url.match(/\.(jpg|jpeg|png)$/i);
-                        
-                        // Korrekte Checkbox-Logik:
+                        const isI = p.post_hint === 'image' || (p.url && p.url.match(/\.(jpg|jpeg|png)$/i));
                         return (fImg && isI) || (fVid && isV) || (fGif && isG);
-                    });
-                } catch(e) { 
-                    console.error("iPhone Fetch Error für " + source, e);
-                    return []; 
-                }
-            }));
+                    }).slice(0, 20);
+                } catch(e) { return []; }
+            });
 
+            const results = await Promise.allSettled(fetchPromises);
             let combined = [];
-            buckets.forEach(b => { combined = combined.concat(b.slice(0, 20)); });
+            results.forEach(res => { if(res.status === 'fulfilled') combined = combined.concat(res.value); });
             redditPosts = combined.sort(() => Math.random() - 0.5);
         }
 
@@ -232,52 +218,43 @@
             const post = redditPosts[postIndex];
             
             img.style.display = 'none'; vid.style.display = 'none'; vid.pause();
-            img.onerror = () => { 
-                console.log("Bild konnte nicht geladen werden, springe zum nächsten.");
-                postIndex = (postIndex + 1) % redditPosts.length; rotateMedia(); 
-            };
+            img.onerror = () => { postIndex = (postIndex + 1) % redditPosts.length; rotateMedia(); };
 
             if (post.is_video && post.media?.reddit_video) {
-                vid.src = post.media.reddit_video.fallback_url; 
+                vid.src = post.media.reddit_video.fallback_url;
                 vid.style.display = 'block'; 
-                vid.play().catch(e => console.warn("Autoplay auf iOS blockiert, stelle sicher, dass muted aktiv ist.", e));
+                vid.play().catch(() => {});
             } else if (post.preview?.reddit_video_preview) {
-                vid.src = post.preview.reddit_video_preview.fallback_url; 
-                vid.style.display = 'block'; 
-                vid.play().catch(e => console.warn("Autoplay blockiert."));
+                vid.src = post.preview.reddit_video_preview.fallback_url;
+                vid.style.display = 'block';
+                vid.play().catch(() => {});
             } else { 
-                img.src = getHDUrl(post); 
-                img.style.display = 'block'; 
+                img.src = getHDUrl(post); img.style.display = 'block'; 
             }
+            
             postIndex = (postIndex + 1) % redditPosts.length;
             mediaInt = setTimeout(rotateMedia, cfg.imgDur * 1000);
         }
 
         async function bootGame() {
-            const btn = document.querySelector('.start-btn'); 
-            const originalText = btn.innerText;
-            btn.innerText = "LADE DATEN..."; btn.disabled = true;
-            
+            const btn = document.getElementById('start-btn-el');
+            btn.innerText = "LADE HD MEDIA..."; btn.disabled = true;
             await fetchSources();
             
-            if(redditPosts.length === 0) { 
-                alert("Keine Medien gefunden! Prüfe deine Internetverbindung oder ob Safari 'Cross-Sitel-Tracking verhindern' aktiv hat."); 
-                btn.innerText = originalText; btn.disabled = false; 
-                return; 
+            if(redditPosts.length === 0) {
+                alert("Nichts gefunden. Prüfe Internet & Quellen.");
+                btn.innerText = "SPIEL STARTEN"; btn.disabled = false;
+                return;
             }
-            
-            const totalSec = parseFloat(document.getElementById('t-total-min').value) * 60;
+
             cfg = {
-                total: totalSec,
+                total: parseFloat(document.getElementById('t-total-min').value) * 60,
                 imgDur: parseFloat(document.getElementById('t-img-dur').value),
-                gMin: parseFloat(document.getElementById('t-gmin').value), 
-                gMax: parseFloat(document.getElementById('t-gmax').value),
-                rMin: parseFloat(document.getElementById('t-rmin').value), 
-                rMax: parseFloat(document.getElementById('t-rmax').value),
-                wildness: parseFloat(document.getElementById('t-wild').value), 
-                chaosPoint: totalSec * 0.7
+                gMin: parseFloat(document.getElementById('t-gmin').value), gMax: parseFloat(document.getElementById('t-gmax').value),
+                rMin: parseFloat(document.getElementById('t-rmin').value), rMax: parseFloat(document.getElementById('t-rmax').value),
+                wildness: parseFloat(document.getElementById('t-wild').value), chaosPoint: (parseFloat(document.getElementById('t-total-min').value) * 60) * 0.7
             };
-            
+
             document.getElementById('setup-ui').style.display = 'none';
             document.getElementById('game-ui').style.display = 'flex';
             isLive = true; startT = Date.now();
@@ -305,11 +282,9 @@
             let isWild = elapsed >= cfg.chaosPoint;
             let dur, exp = isWild ? cfg.wildness : 1.0;
             
-            if (Math.random() < 0.15) {
-                dur = type === 'green' ? Math.random()*(cfg.gMax-cfg.gMin)+cfg.gMin : Math.random()*(cfg.rMax-cfg.rMin)+cfg.rMin;
-            } else {
-                dur = type === 'green' ? cfg.gMin + (cfg.gMax-cfg.gMin)*Math.pow(Math.random(), exp) : cfg.rMin + (cfg.rMax-cfg.rMin)*Math.pow(Math.random(), exp);
-            }
+            dur = (Math.random() < 0.15) 
+                ? (type === 'green' ? Math.random()*(cfg.gMax-cfg.gMin)+cfg.gMin : Math.random()*(cfg.rMax-cfg.rMin)+cfg.rMin)
+                : (type === 'green' ? cfg.gMin + (cfg.gMax-cfg.gMin)*Math.pow(Math.random(), exp) : cfg.rMin + (cfg.rMax-cfg.rMin)*Math.pow(Math.random(), exp));
 
             const label = document.getElementById('status-label');
             if (type === 'green') {
@@ -321,6 +296,8 @@
                 clock = setTimeout(() => cycle('green'), dur * 1000);
             }
         }
+
+        function resetGame() { location.reload(); }
 
         function finish() {
             isLive = false; cancelAnimationFrame(animFrame); clearTimeout(clock); clearTimeout(mediaInt); clearInterval(countdownInt);
