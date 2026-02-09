@@ -3,98 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Red Light Green Light - Final Master Polished</title>
+    <title>Red Light Green Light - Final Tank Mode</title>
     <style>
-        :root {
-            --bg: #0b0f19; --card: #161e2d; --accent: #38bdf8;
-            --green: #10b981; --red: #ef4444; --white: #f8fafc;
-            --input-bg: rgba(11, 15, 25, 0.9);
-        }
-
-        html, body {
-            margin: 0; padding: 0; width: 100vw; height: 100vh;
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg); color: var(--white);
-            display: flex; justify-content: center; align-items: center;
-            transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden; -webkit-tap-highlight-color: transparent;
-        }
-
-        /* --- SETTINGS PORTAL --- */
-        .setup-container { 
-            padding: 2.5rem; border-radius: 2.5rem; width: 95%; max-width: 550px; 
-            background: var(--card); box-shadow: 0 30px 60px rgba(0,0,0,0.9);
-            z-index: 100; text-align: center; max-height: 92vh; overflow-y: auto;
-            backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05);
-            scrollbar-width: none; box-sizing: border-box;
-        }
+        :root { --bg: #0b0f19; --card: #161e2d; --accent: #38bdf8; --green: #10b981; --red: #ef4444; --white: #f8fafc; --input-bg: rgba(11, 15, 25, 0.9); }
+        html, body { margin: 0; padding: 0; width: 100vw; height: 100vh; font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: var(--bg); color: var(--white); display: flex; justify-content: center; align-items: center; transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; -webkit-tap-highlight-color: transparent; }
+        .setup-container { padding: 2.5rem; border-radius: 2.5rem; width: 95%; max-width: 550px; background: var(--card); box-shadow: 0 30px 60px rgba(0,0,0,0.9); z-index: 100; text-align: center; max-height: 92vh; overflow-y: auto; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); scrollbar-width: none; box-sizing: border-box; }
         .setup-container::-webkit-scrollbar { display: none; }
-
         h2 { margin: 0 0 1.5rem 0; color: var(--accent); font-size: 2rem; font-weight: 800; }
-
-        .section-title {
-            font-size: 0.7rem; text-transform: uppercase; color: var(--accent);
-            letter-spacing: 2px; margin: 1.5rem 0 0.8rem 0; text-align: left;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2); padding-bottom: 0.4rem; font-weight: 900;
-        }
-
+        .section-title { font-size: 0.7rem; text-transform: uppercase; color: var(--accent); letter-spacing: 2px; margin: 1.5rem 0 0.8rem 0; text-align: left; border-bottom: 1px solid rgba(56, 189, 248, 0.2); padding-bottom: 0.4rem; font-weight: 900; }
         .settings-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; text-align: left; }
         .full-width { grid-column: 1 / -1; }
-
         .input-group { display: flex; flex-direction: column; gap: 0.4rem; }
         label { font-size: 0.65rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; }
-        
-        input, select { 
-            background: var(--input-bg); border: 2px solid #334155; padding: 0.9rem; 
-            border-radius: 1rem; color: white; font-size: 1rem; outline: none; transition: all 0.2s;
-            width: 100%; box-sizing: border-box;
-        }
+        input, select { background: var(--input-bg); border: 2px solid #334155; padding: 0.9rem; border-radius: 1rem; color: white; font-size: 1rem; outline: none; transition: all 0.2s; width: 100%; box-sizing: border-box; }
         input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
-
-        .checkbox-group { 
-            display: flex; flex-wrap: wrap; justify-content: space-around; background: var(--input-bg); 
-            padding: 0.9rem; border-radius: 1rem; border: 2px solid #334155; gap: 10px;
-        }
+        .checkbox-group { display: flex; flex-wrap: wrap; justify-content: space-around; background: var(--input-bg); padding: 0.9rem; border-radius: 1rem; border: 2px solid #334155; gap: 10px; }
         .checkbox-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
         .checkbox-item input { width: 1.2rem; height: 1.2rem; cursor: pointer; appearance: checkbox; -webkit-appearance: checkbox; }
-
-        .start-btn { 
-            width: 100%; background: var(--accent); color: var(--bg); border: none; 
-            padding: 1.4rem; border-radius: 1.5rem; font-weight: 900; font-size: 1.3rem; 
-            cursor: pointer; margin-top: 2rem; transition: all 0.3s; text-transform: uppercase;
-        }
-
-        /* --- GAME UI --- */
-        #game-ui { 
-            display: none; width: 100vw; height: 100vh; flex-direction: column; 
-            justify-content: space-between; align-items: center; position: relative; 
-            z-index: 10; padding: env(safe-area-inset-top, 0.5rem) 1rem env(safe-area-inset-bottom, 1rem) 1rem; 
-            box-sizing: border-box; 
-        }
-
-        .btn-close {
-            position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(0,0,0,0.4); border: none; 
-            color: white; width: 3.2rem; height: 3.2rem; border-radius: 50%; display: flex;
-            justify-content: center; align-items: center; cursor: pointer; z-index: 200; backdrop-filter: blur(15px);
-        }
-
+        .start-btn { width: 100%; background: var(--accent); color: var(--bg); border: none; padding: 1.4rem; border-radius: 1.5rem; font-weight: 900; font-size: 1.3rem; cursor: pointer; margin-top: 2rem; transition: all 0.3s; text-transform: uppercase; }
+        #game-ui { display: none; width: 100vw; height: 100vh; flex-direction: column; justify-content: space-between; align-items: center; position: relative; z-index: 10; padding: env(safe-area-inset-top, 0.5rem) 1rem env(safe-area-inset-bottom, 1rem) 1rem; box-sizing: border-box; }
+        .btn-close { position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(0,0,0,0.4); border: none; color: white; width: 3.2rem; height: 3.2rem; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 200; backdrop-filter: blur(15px); }
         .top-display { z-index: 50; text-align: center; margin-top: 0; text-shadow: 0 2px 20px rgba(0,0,0,0.8); pointer-events: none; }
-        
-        /*Schriftgröße */
         .status-text { font-size: clamp(4.5rem, 22vw, 8.5rem); font-weight: 900; text-transform: uppercase; letter-spacing: -5px; margin: 0; line-height: 0.8; }
-
-        .media-background { 
-            position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; 
-            display: flex; justify-content: center; align-items: center; 
-            z-index: 1; background: transparent; 
-        }
+        .media-background { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; z-index: 1; background: transparent; }
         #reddit-image, #reddit-video { width: 100%; height: 100%; object-fit: contain; }
-
         .bottom-bar { width: 90%; max-width: 650px; z-index: 50; margin-bottom: 0.5rem; }
         .progress-container { width: 100%; height: 12px; background: rgba(255,255,255,0.3); border-radius: 20px; position: relative; overflow: visible; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
         #progress-bar { width: 0%; height: 100%; background: var(--white); border-radius: 20px; transition: width 0.1s linear; }
         #phase-marker { position: absolute; left: 70%; top: -6px; bottom: -6px; width: 3px; background: white; box-shadow: 0 0 15px white; z-index: 60; border-radius: 4px; }
-
         body.green-active { background-color: var(--green); }
         body.red-active { background-color: var(--red); }
         .pulse { animation: pulse-anim 0.4s infinite alternate; }
@@ -144,13 +80,12 @@
             <div class="input-group"><label>Grün Min (s)</label><input type="number" id="t-gmin" value="5"></div>
             <div class="input-group"><label>Grün Max (s)</label><input type="number" id="t-gmax" value="12"></div>
             <div class="input-group"><label>Rot Min (s)</label><input type="number" id="t-rmin" value="4"></div>
-            <div class="input-group"><label>Rot Max (s)</label><input type="number" id="t-rmax" value="10"></div>
+            <div class="input-group"><label>Rot Max (s)</label><input type="number" id="t-rmax" value="25"></div>
             <div class="input-group full-width">
                 <label>Phase 2 Intensität</label>
                 <select id="t-wild">
-                    <option value="1.6">Nervös</option>
-                    <option value="3.0" selected>Extrem</option>
-                    <option value="5.5">Wahnsinn</option>
+                    <option value="1.9">Nervös (Sportlich)</option>
+                    <option value="3.5" selected>Extrem (Hart)</option>
                 </select>
             </div>
         </div>
@@ -181,6 +116,32 @@
             return post.url;
         }
 
+        // --- DER NEUE "PANZER"-FETCH (3 STUFEN) ---
+        async function fetchRedditData(url) {
+            // 1. Direkt-Versuch (Geht oft am Handy)
+            try {
+                const r = await fetch(url);
+                if (r.ok) return await r.json();
+            } catch (e) {}
+            
+            // 2. Proxy 1: AllOrigins (Der Klassiker)
+            try {
+                console.log("Versuche Proxy 1...");
+                const pr = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+                const res = await pr.json();
+                if (res.contents) return JSON.parse(res.contents);
+            } catch (e) {}
+
+            // 3. Proxy 2: CorsProxy.io (Der Retter in der Not)
+            try {
+                console.log("Versuche Proxy 2...");
+                const pr2 = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
+                if (pr2.ok) return await pr2.json();
+            } catch (e) { console.error("Alle Versuche gescheitert", e); }
+
+            return null;
+        }
+
         async function fetchSources() {
             const sourceStr = document.getElementById('t-sources').value || "memes";
             const sort = document.getElementById('t-sort').value;
@@ -188,27 +149,31 @@
             const fImg = document.getElementById('f-img').checked;
             const fVid = document.getElementById('f-vid').checked;
             const fGif = document.getElementById('f-gif').checked;
-
             const fetchSort = sort === 'random' ? 'hot' : sort;
+            
             const buckets = await Promise.all(sourceList.map(async (source) => {
                 let url = source.toLowerCase().startsWith('u/') 
                     ? `https://www.reddit.com/user/${source.substring(2)}/submitted.json?sort=${fetchSort}&limit=40`
                     : `https://www.reddit.com/r/${source}/${fetchSort}.json?limit=40`;
                 try { 
-                    const r = await fetch(url); 
-                    const j = await r.json(); 
-                    return j.data.children.map(c => c.data).filter(p => {
+                    const data = await fetchRedditData(url);
+                    if (!data || !data.data || !data.data.children) return [];
+                    return data.data.children.map(c => c.data).filter(p => {
                         const isG = p.url.endsWith('.gif') || p.preview?.reddit_video_preview;
-                        const isV = p.is_video;
+                        const isV = p.is_video || p.post_hint === 'hosted:video';
                         const isI = p.post_hint === 'image' || p.url.match(/\.(jpg|jpeg|png)$/i);
-                        return (fImg && isI) || (fVid && isV) || (fGif && isG);
+                        if (fVid && isV) return true;
+                        if (fImg && isI && !isG) return true;
+                        if (fGif && isG) return true;
+                        return false;
                     });
                 } catch(e) { return []; }
             }));
 
             let combined = [];
-            buckets.forEach(b => { combined = combined.concat(b.slice(0, 20)); });
-            redditPosts = combined.sort(() => Math.random() - 0.5);
+            buckets.forEach(b => { combined = combined.concat(b); });
+            const unique = [...new Map(combined.map(item => [item.id, item])).values()];
+            redditPosts = unique.sort(() => Math.random() - 0.5);
         }
 
         function rotateMedia() {
@@ -232,10 +197,14 @@
         }
 
         async function bootGame() {
-            const btn = document.querySelector('.start-btn'); btn.innerText = "LADE HD-STREAMS...";
+            const btn = document.querySelector('.start-btn'); 
+            const originalText = btn.innerText;
+            btn.innerText = "LADE HD-STREAMS..."; btn.disabled = true;
             await fetchSources();
-            if(redditPosts.length === 0) { alert("Keine Medien gefunden!"); btn.innerText = "SPIEL STARTEN"; return; }
-            
+            if(redditPosts.length === 0) { 
+                alert("Keine Medien gefunden! Entweder sind die Quellen leer, oder du wurdest kurz blockiert (Rate Limit). Warte 1 Minute oder wechsle das Subreddit."); 
+                btn.innerText = originalText; btn.disabled = false; return; 
+            }
             const totalSec = parseFloat(document.getElementById('t-total-min').value) * 60;
             cfg = {
                 total: totalSec,
@@ -269,21 +238,38 @@
             if (!isLive) return;
             let elapsed = (Date.now() - startT) / 1000;
             let isWild = elapsed >= cfg.chaosPoint;
-            let dur, exp = isWild ? cfg.wildness : 1.0;
-            
-            if (Math.random() < 0.15) {
-                dur = type === 'green' ? Math.random()*(cfg.gMax-cfg.gMin)+cfg.gMin : Math.random()*(cfg.rMax-cfg.rMin)+cfg.rMin;
+
+            let exp = isWild ? cfg.wildness : 1.0;
+
+            let dur;
+            // JOKER-LOGIK: Nur ROT darf Joker haben.
+            let allowJoker = (type === 'red') || (!isWild); 
+
+            if (allowJoker && Math.random() < 0.15) {
+                // Ehrlicher Zufall
+                dur = type === 'green' 
+                    ? Math.random() * (cfg.gMax - cfg.gMin) + cfg.gMin 
+                    : Math.random() * (cfg.rMax - cfg.rMin) + cfg.rMin;
             } else {
-                dur = type === 'green' ? cfg.gMin + (cfg.gMax-cfg.gMin)*Math.pow(Math.random(), exp) : cfg.rMin + (cfg.rMax-cfg.rMin)*Math.pow(Math.random(), exp);
+                // Gestresster Zufall
+                dur = type === 'green' 
+                    ? cfg.gMin + (cfg.gMax - cfg.gMin) * Math.pow(Math.random(), exp)
+                    : cfg.rMin + (cfg.rMax - cfg.rMin) * Math.pow(Math.random(), exp);
             }
+
+            dur = Math.max(dur, 0.4);
 
             const label = document.getElementById('status-label');
             if (type === 'green') {
-                document.body.className = 'green-active'; label.classList.remove('pulse'); runCountdown(dur);
+                document.body.className = 'green-active'; 
+                label.classList.remove('pulse'); 
+                runCountdown(dur);
                 clock = setTimeout(() => cycle('red'), dur * 1000);
             } else {
-                clearInterval(countdownInt); document.body.className = 'red-active'; label.innerText = "STOPP";
-                if (isWild) label.classList.add('pulse');
+                clearInterval(countdownInt); 
+                document.body.className = 'red-active'; 
+                label.innerText = "STOPP";
+                if (isWild) label.classList.add('pulse'); 
                 clock = setTimeout(() => cycle('green'), dur * 1000);
             }
         }
